@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+  	<div class="content-wrap">
+     <header class="hero-area" id="home">
+
+      <div class="container">
+          <div class="col-md-12">
+
+            {% include 'navbar.html' %}
+
+        </div>
+        <div class="contents text-right" style="margin-top:75px">
+          <form method='GET' action=''>
+            <input name='q' placeholder='Name, Place, Locality' value='{{ request.GET.q }}' class="btn btn-lg btn-border wow fadeInUp searchtab" data-wow-duration="2000ms" data-wow-delay="400ms" type="text" style="margin:0px; padding-left:10px"/>
+            <input type='submit' value='search' class="btn btn-lg btn-border wow fadeInUp" data-wow-duration="2000ms" data-wow-delay="400ms" style="float:right; margin:0px;" />
+
+          </form>
+
+
+          <!-- <p class="wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="400ms">Material Design Inspired HTML5 Bootstrap Template for Business and App</p>
+          <a href="#why" class="btn btn-lg btn-primary wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Download</a>
+          <a href="#features" class="btn btn-lg btn-border wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">Learn More</a> -->
+        </div>
+
+        <div class="contents text-left" style="margin-top:75px">
+
+
+          <!-- <p class="wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="400ms">Material Design Inspired HTML5 Bootstrap Template for Business and App</p>
+          <a href="#why" class="btn btn-lg btn-primary wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Download</a>
+          <a href="#features" class="btn btn-lg btn-border wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">Learn More</a> -->
+        </div>
+    </header>
+
+
+
+<div class="container-fluid">
+
+{% for each in object_list %}
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-3">
+<div class="demo-card-wide mdl-card mdl-shadow--8dp filter wow fadeInLeft" data-wow-duration="2000ms" data-wow-delay="150ms" style="width:100%">
+
+        <div class="mdl-card__title">
+          <!-- MDL Card Title container -->
+          <h1 class="mdl-card__title-text" style="font-size:2em; padding-left:0px margin-left:0px">Refine Results</h1>
+
+        </div>
+<div class="mdl-card__actions mdl-card--border">
+  <br/>         <!-- title text -->
+  <br/>         <!-- title text -->
+  <form action="" method="get">
+        {{ filter.form|crispy }}
+        <input type="submit" value="Refine"  class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"/>
+    </form>
+    <br/><br/>
+</div>
+</div>
+</div>
+<div class="col-sm-7">
+<div class="demo-card-wide mdl-card mdl-shadow--8dp  wow fadeInRight" data-wow-duration="2000ms" data-wow-delay="150ms" style="width:100%">
+     <!-- MDL Card Container -->
+
+      <div class="mdl-card__title">
+        <!-- MDL Card Title container -->
+        <h1 class="mdl-card__title-text" style="font-size:2em">{{each.name}} -&nbsp</h1>
+        <h1 class="mdl-card__title-text">{{each.address}}</h1>
+                 <!-- title text -->
+      </div>
+     <img style="width:100%" src="{{ MEDIA_URL }}{{ each.pic }}" />
+     <!-- Supporting Text -->
+      <div class="mdl-card__supporting-text">
+       {{each.description}}
+	   <br/> <br/>
+	   Price Range : {{each.price}}
+      </div>
+
+     <!-- Border and Action Elements -->
+      <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="{{ each.get_absolute_url }}">
+          More Info
+        </a>
+      </div>
+
+     <!-- Menu button with Effects -->
+      <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+          <i class="material-icons">star</i>
+        </button>
+      </div>
+
+</div>
+</div>
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<div class="pagination">
+     <span class="step-links">
+         {% if object_list.has_previous %}
+             <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+         {% endif %}
+
+         <span class="current">
+             Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+         </span>
+
+         {% if object_list.has_next %}
+             <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+         {% endif %}
+     </span>
+ </div>
+</div>
+
+<script type="text/javascript">
+	function popup(x){
+		alert(x);
+	}
+</script>
+
+
+{% endblock %}
+
+
+<!--
+<form action="" method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" />
+</form>
+{% for obj in filter %}
+    {{ obj.name }} - ${{ obj.price }}<br />
+{% endfor %}
+-->

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  	<div class="content-wrap">
+
+      <div class="col-md-12">
+
+        {% include 'navbar.html' %}
+
+    </div>
+
+
+<style>
+.filter{
+padding: 20px;
+}
+</style>
+
+
+<div class="container-fluid">
+<div class="row" style="margin-top:80px">
+<div class="col-sm-1">
+</div>
+<div class="col-sm-3">
+  <div class="demo-card-wide mdl-card mdl-shadow--8dp filter wow fadeInRight" data-wow-duration="2000ms" data-wow-delay="150ms" style="width:100%">
+    <br/>
+
+    <h5> <i class="fa fa-inr"></i> PRICE RANGE</h5><br/>
+    <p>{{instance.min_price}} - {{instance.max_price}}</p>
+    <h5> <i class="fa fa-group"></i>  CAPACITY</h5><br/>
+    <p>{{instance.capacity}}</p>
+    <h5> <i class="fa fa-check-square-o"></i> NON VEG</h5><br/>
+    <p>
+        {% if not instance.non_veg %}
+              Not
+
+         {% endif %}
+         Available</p>
+
+         <h5> <i class="fa fa-check-square-o"></i> OUTSIDE CATERING</h5><br/>
+         <p>
+             {% if not instance.outside_catering %}
+                   Not
+
+              {% endif %}
+              Available</p><h5> <i class="fa fa-diamond"></i> DECOR</h5><br/>
+              <p>
+                  {% if not instance.decor %}
+                        Not
+
+                   {% endif %}
+                   Available</p>
+
+   <h5> <i class="fa fa-phone-square"></i> CONTACT</h5><br/>
+   <p>{{instance.phone}}</p>
+   <h5><i class="fa fa-car"></i> PARKING CAPACITY</h5><br/>
+   <p>{{instance.car_parking}}</p>
+
+
+   <h5> <i class="fa fa-cutlery"></i> CUISINES</h5><br/>
+
+{% for each in instance.cuisines.all %}
+   <p>{{each.name}}</p>
+{% endfor %}
+
+  </div>
+  </div>
+
+<div class="col-sm-7">
+<div class="demo-card-wide mdl-card mdl-shadow--8dp filter wow fadeInLeft" data-wow-duration="2000ms" data-wow-delay="150ms" style="width:100%">
+
+  <div class="mdl-card__title">
+    <!-- MDL Card Title container -->
+    <h1 class="mdl-card__title-text" style="font-size:2em; padding-left:0px margin-left:0px">{{title}}</h1>
+
+  </div>
+
+
+  <div class="mdl-card__actions mdl-card--border">
+  <br/>       <!-- title text -->
+
+<div class="col-sm-12">
+
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+
+
+      <!--<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    -->
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="{{ MEDIA_URL }}{{ instance.pic }}" alt="...">
+        <!-- <div class="carousel-caption">
+          Big Yellow Door
+        </div>-->
+      </div>
+
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+      <span class="icon-prev" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <span class="icon-next" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+
+
+</div>
+<br/>
+<div class="col-sm-12">
+<div class="map-area">
+<div class="map">
+<iframe src="{{ instance.map_link }}" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</div>
+<p style="margin:5px">
+  <br />
+{{ instance.description|linebreaks }}
+</p>
+
+{% for r in reviews %}
+<div class="col-sm-12">
+<p>{{ r.user }}</p>
+</div>
+{% endfor %}
+
+<form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+    <table>{{ form|crispy }}</table>
+    <input class='btn btn-block btn-primary' type='submit' value='Post'/>
+</form>
+
+</div>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+
+{% endblock %}
