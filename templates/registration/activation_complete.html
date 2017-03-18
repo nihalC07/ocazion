@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="col-md-12" style="margin-bottom: 70px">
+	{% include 'navbar.html' %}
+</div>
+<p class='lead'>{% trans "Your account is now activated." %}</p>
+{% endblock %}
